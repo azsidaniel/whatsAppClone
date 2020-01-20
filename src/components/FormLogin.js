@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, TouchableHighlight} from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableHighlight, ActivityIndicator} from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 
@@ -12,6 +12,21 @@ class formLogin extends Component{
 
    this.props.autenticarUsuario({ email, senha })
   }
+  renderBtnAcessar = () => {
+    if (this.props.loading_login) {
+      return (
+        <ActivityIndicator size='large'/>
+      )
+    } 
+    return (
+      <Button 
+        title="Acessar"
+        color="#50a358"
+        onPress={() => this._autenticarUsuario()}
+      />
+    )
+  }
+
   render(){
     return (
       <View style={styles.container}>
@@ -40,11 +55,7 @@ class formLogin extends Component{
         </View>
 
         <View style={styles.containerButton}>
-          <Button 
-            title="Acessar"
-            color="#50a358"
-            onPress={() => this._autenticarUsuario()}
-          />
+          {this.renderBtnAcessar()}
         </View>
 
       </View>
@@ -88,7 +99,7 @@ const styles = StyleSheet.create({
     color: '#ff0000',
     fontSize: 18,
     alignSelf: 'center',
-    height: 100,
+    height: 10,
     fontWeight: "bold",
   },
 })
@@ -99,6 +110,7 @@ const mapStateToProps = state => (
     email: state.AutenticacaoReducer.email,
     senha: state.AutenticacaoReducer.senha,
     erroLogin: state.AutenticacaoReducer.erroLogin,
+    loading_login: state.AutenticacaoReducer.loading_login,
   }
 )
 
