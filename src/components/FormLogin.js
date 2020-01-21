@@ -21,7 +21,7 @@ class formLogin extends Component{
     return (
       <Button 
         title="Acessar"
-        color="#50a358"
+        color="purple"
         onPress={() => this._autenticarUsuario()}
       />
     )
